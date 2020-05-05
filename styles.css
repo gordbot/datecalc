@@ -1,0 +1,89 @@
+h1 {
+    font-family: Arial, Helvetica;
+    color: #304972;
+    margin: 0;
+    padding: 0px;
+    font-size: 51px;
+    line-height: 44px;
+    letter-spacing: -2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 6px;
+    font-family: Arial, Helvetica;
+    color: #304972;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    display: block;
+    font-size: 25px;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul li {
+    display: block;
+    margin-bottom: 10px;
+    min-height: 35px;
+}
+
+ul li.workingdays {
+    text-align: center;
+    margin: 20px;
+    font-size: 50px;
+}
+
+.form-style {
+    max-width: 800px;
+    background: #FAFAFA;
+    padding: 30px;
+    margin: 25px auto;
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    border: 6px solid #305A72;
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    font-size: 22pt;
+    display: flex;
+    justify-content: space-around;
+}
+
+input[type="date"] {
+    -webkit-align-items: center;
+    display: -webkit-inline-flex;
+    overflow: hidden;
+    padding: 0;
+    -webkit-padding-start: 1px;
+    font-size: 24px;
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+}
+
+input[type="text"] {
+    -webkit-align-items: center;
+    display: -webkit-inline-flex;
+    overflow: hidden;
+    padding: 0;
+    -webkit-padding-start: 1px;
+    font-size: 24px;
+    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
+    width: 40px;
+}
+.footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #305A72;
+  color: white;
+  text-align: center;
+}
+a {
+  color: white;
+}
