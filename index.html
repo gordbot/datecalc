@@ -41,7 +41,7 @@
 </div>
 <script>
 var holidays = [];
-function change_result() {	
+function change_result() {
 	var startDate = document.getElementsByTagName("input")[0].value;
 	var endDate = document.getElementsByTagName("input")[1].value;
 	var xmlhttp;
@@ -54,14 +54,14 @@ function change_result() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var text = xmlhttp.responseText;
 				// Now convert it into array using regex
-				
+
 				holidays = text.split("\n");
 				document.getElementById("result").innerHTML = workingDaysBetweenDates(startDate,endDate) + " working days";
 		}
 	}
 	xmlhttp.open("GET", "holidayslist.txt", true);
 	xmlhttp.send();
-	
+
 }
 $(document).ready(() => {
   $('#calc').click(() => {
@@ -76,7 +76,7 @@ let workingDaysBetweenDates = (d0, d1) => {
   //var holidays = ['2016-05-03', '2016-05-05', '2016-05-07'];
   var startDate = parseDate(d0);
   startDate.setDate(startDate.getDate() + 1);
-  var endDate = parseDate(d1);  
+  var endDate = parseDate(d1);
 
 // Validate input
   if (endDate < startDate) {
@@ -87,7 +87,7 @@ let workingDaysBetweenDates = (d0, d1) => {
   var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
   startDate.setHours(0, 0, 0, 1);  // Start just after midnight
   endDate.setHours(23, 59, 59, 999);  // End just before midnight
-  var diff = endDate - startDate;  // Milliseconds between datetime objects    
+  var diff = endDate - startDate;  // Milliseconds between datetime objects
   var days = Math.ceil(diff / millisecondsPerDay);
 
   // Subtract two weekend days for every week in between
@@ -97,14 +97,14 @@ let workingDaysBetweenDates = (d0, d1) => {
   // Handle special cases
   var startDay = startDate.getDay();
   var endDay = endDate.getDay();
-    
-  // Remove weekend not previously removed.   
+
+  // Remove weekend not previously remove
   if (startDay - endDay > 1) {
     days -= 2;
   }
   // Remove start day if span starts on Sunday but ends before Saturday
   if (startDay == 0 && endDay != 6) {
-    days--;  
+    days--;
   }
   // Remove end day if span ends on Saturday but starts after Sunday
   if (endDay == 6 && startDay != 0) {
@@ -132,7 +132,7 @@ function getFormattedDate(date) {
     let year = date.getFullYear();
     let month = (1 + date.getMonth()).toString().padStart(2, '0');
     let day = date.getDate().toString().padStart(2, '0');
-  
+
     return year + '-' + month + '-' + day;
 }
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -143,7 +143,6 @@ function AddBusinessDays() {
 	var DaysAdded = 0;
 	var EndDateDate = parseDate(EndDate);
 
-	
 	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp = new XMLHttpRequest();
 		} else { // code for IE6, IE5
@@ -153,7 +152,7 @@ function AddBusinessDays() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var text = xmlhttp.responseText;
 				// Now convert it into array using regex
-				
+
 				holidays = text.split("\n");
 					while (DaysAdded != DaysToAdd) {
 						EndDateDate.setDate(EndDateDate.getDate() + 1);
@@ -182,12 +181,12 @@ function SubBusinessDays() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var text = xmlhttp.responseText;
 				// Now convert it into array using regex
-				
+
 				holidays = text.split("\n");
 					while (DaysSubbed != DaysToSub) {
 					  // Handle special cases
 					  var startDay = StartDateDate.getDay();
-					  // Remove weekend not previously removed.   
+					  // Remove weekend not previously removed.
 					  if (startDay == 1) {
 						StartDateDate.setDate(StartDateDate.getDate() - 3);
 					  } else {
