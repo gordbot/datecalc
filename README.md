@@ -11,12 +11,11 @@ In the second box you can enter a start date and a number of business days to co
 
 In the third box, you can enter an end date and a number of business days backward and it will return the start date.
 
-Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
 
 This work is licensed under a [Creative Commons Attribution 4.0 International
 License][cc-by].
 
-[![CC BY 4.0][cc-by-image]][cc-by]
+[![CC BY 4.0][cc-by-shield]][cc-by]
 
 [cc-by]: http://creativecommons.org/licenses/by/4.0/
 [cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
