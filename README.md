@@ -1,4 +1,6 @@
-# What does it do?
+# Business Day Calculator - datecalc
+
+## What does it do?
 
 Whenever you need to calculate some time in the future or the past or between two dates counting only business days, look no further.
 
