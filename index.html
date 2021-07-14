@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
+  <head>
+    <meta charset="utf-8" />
     <title>Business Days Calculator</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -18,13 +18,22 @@
       crossorigin="anonymous"
     />
 
+    <!-- Bootstrap Date-Picker Plugin -->
+    <!-- <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
+    /> -->
+
     <!-- Moment.js -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css" />
-</head>
-<body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
     <!-- Heading-Area -->
     <div class="heading-area">
       <div class="container text-center">
@@ -126,171 +135,6 @@
         </div>
       </div>
     </div>
-<script>
-var holidays = [];
-function change_result() {
-	var startDate = document.getElementsByTagName("input")[0].value;
-	var endDate = document.getElementsByTagName("input")[1].value;
-	var xmlhttp;
-	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-		} else { // code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var text = xmlhttp.responseText;
-				// Now convert it into array using regex
-
-				holidays = text.split("\n");
-				document.getElementById("result").innerHTML = workingDaysBetweenDates(startDate,endDate) + " working days";
-		}
-	}
-	xmlhttp.open("GET", "holidayslist.txt", true);
-	xmlhttp.send();
-
-}
-$(document).ready(() => {
-  $('#calc').click(() => {
-  var d1 = $('#d1').val();
-  var d2 = $('#d2').val();
-    $('#dif').text(workingDaysBetweenDates(d1,d2));
-  });
-});
-
-let workingDaysBetweenDates = (d0, d1) => {
-  /* Two working days and an sunday (not working day) */
-  //var holidays = ['2016-05-03', '2016-05-05', '2016-05-07'];
-  var startDate = parseDate(d0);
-  startDate.setDate(startDate.getDate() + 1);
-  var endDate = parseDate(d1);
-
-// Validate input
-  if (endDate < startDate) {
-    return 0;
-  }
-
-// Calculate days between dates
-  var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
-  startDate.setHours(0, 0, 0, 1);  // Start just after midnight
-  endDate.setHours(23, 59, 59, 999);  // End just before midnight
-  var diff = endDate - startDate;  // Milliseconds between datetime objects
-  var days = Math.ceil(diff / millisecondsPerDay);
-
-  // Subtract two weekend days for every week in between
-  var weeks = Math.floor(days / 7);
-  days -= weeks * 2;
-
-  // Handle special cases
-  var startDay = startDate.getDay();
-  var endDay = endDate.getDay();
-
-  // Remove weekend not previously remove
-  if (startDay - endDay > 1) {
-    days -= 2;
-  }
-  // Remove start day if span starts on Sunday but ends before Saturday
-  if (startDay == 0 && endDay != 6) {
-    days--;
-  }
-  // Remove end day if span ends on Saturday but starts after Sunday
-  if (endDay == 6 && startDay != 0) {
-    days--;
-  }
-  /* Here is the code */
-  holidays.forEach(day => {
-    if ((day >= d0) && (day <= d1)) {
-      /* If it is not saturday (6) or sunday (0), substract it */
-      if ((parseDate(day).getDay() % 6) != 0) {
-        days--;
-      }
-    }
-  });
-  return days;
-}
-
-function parseDate(input) {
-	// Transform date from text to date
-  var parts = input.match(/(\d+)/g);
-  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-  return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
-}
-function getFormattedDate(date) {
-    let year = date.getFullYear();
-    let month = (1 + date.getMonth()).toString().padStart(2, '0');
-    let day = date.getDate().toString().padStart(2, '0');
-
-    return year + '-' + month + '-' + day;
-}
-var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-function AddBusinessDays() {
-	var StartDate = document.getElementsByTagName("input")[2].value;
-	var EndDate = StartDate;
-	var DaysToAdd = document.getElementsByTagName("input")[3].value;
-	var DaysAdded = 0;
-	var EndDateDate = parseDate(EndDate);
-
-	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-		} else { // code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var text = xmlhttp.responseText;
-				// Now convert it into array using regex
-
-				holidays = text.split("\n");
-					while (DaysAdded != DaysToAdd) {
-						EndDateDate.setDate(EndDateDate.getDate() + 1);
-						DaysAdded = workingDaysBetweenDates(StartDate, getFormattedDate(EndDateDate));
-					}
-					document.getElementById("result2").innerHTML = EndDateDate.toLocaleDateString("en-US", options);
-		}
-	}
-	xmlhttp.open("GET", "holidayslist.txt", true);
-	xmlhttp.send();
-}
-
-function SubBusinessDays() {
-	var EndDate = document.getElementsByTagName("input")[4].value;
-	var StartDate = EndDate;
-	var DaysToSub = document.getElementsByTagName("input")[5].value;
-	var DaysSubbed = 0;
-	var StartDateDate = parseDate(StartDate);
-	var xmlhttp;
-	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-		} else { // code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var text = xmlhttp.responseText;
-				// Now convert it into array using regex
-
-				holidays = text.split("\n");
-					while (DaysSubbed != DaysToSub) {
-					  // Handle special cases
-					  var startDay = StartDateDate.getDay();
-					  // Remove weekend not previously removed.
-					  if (startDay == 1) {
-						StartDateDate.setDate(StartDateDate.getDate() - 3);
-					  } else {
-						StartDateDate.setDate(StartDateDate.getDate() - 1);
-					  }
-					  console.log(StartDateDate);
-					  console.log(startDay);
-					DaysSubbed = workingDaysBetweenDates(getFormattedDate(StartDateDate), EndDate);
-				}
-				document.getElementById("result3").innerHTML = StartDateDate.toLocaleDateString("en-US", options);
-		}
-	}
-	xmlhttp.open("GET", "holidayslist.txt", true);
-	xmlhttp.send();
-
-}
-</script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -311,6 +155,7 @@ function SubBusinessDays() {
       </div>
     </footer>
 
+    <script src="./app.js"></script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -328,6 +173,5 @@ function SubBusinessDays() {
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-
-</body>
+  </body>
 </html>
