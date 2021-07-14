@@ -1,56 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>Business Days Calculator</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8" />
+    <title>Business Days Calculator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
-  <!-- Bootstrap Date-Picker Plugin -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-  <!-- Moment.js -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
-
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- Moment.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <h1>Business Day Calculator</h1>
-    <h2>Take the counting out of working with business day calculations</h2>
-    <div  class="form-style">
-    <form>
-        <p>Enter a start date and end date to get the number of business days between the two dates.</p>
+    <!-- Heading-Area -->
+    <div class="heading-area">
+      <div class="container text-center">
+        <div class="header-content">
+          <h1>Business Day Calculator</h1>
+          <h5>
+            Take the counting out of working with business day calculations
+          </h5>
+        </div>
+      </div>
+    </div>
 
-        <ul>
-            <li>Start Date: <input type="date" onChange="change_result()" name="d1" /> End Date: <input type="date" onChange="change_result()" name="d2"></li>
-            <li class="workingdays"><span id="result"></span></li>
-        </ul>
-    </form>
-</div>
-<div  class="form-style">
-    <form>
-        <p>Enter a start date and a number of business days to count forward.</p>
-        <ul>
-            <li>Start Date: <input type="date" onChange="AddBusinessDays()" name="d3" /> Days to Add: <input class="dayaddsub" type="text" onChange="AddBusinessDays()" name="d4"></li>
-            <li class="workingdays"><span id="result2"></span></li>
-        </ul>
-    </form>
-</div>
-<div class="form-style">
-    <form >
-    <p>Enter an end date and a number of business days to count backwards.</p>
-        <ul>
-            <li>End Date: <input type="date" onChange="SubBusinessDays()" name="d4" /> Days to Subtract: <input class="dayaddsub" type="text" onChange="SubBusinessDays()" name="d5"></li>
-            <li class="workingdays"><span id="result3"></span></li>
-        </ul>
-    </form>
-</div>
+    <div class="container h-100 form-wrapper">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="card-form">
+          <form>
+            <p>
+              Enter a start date and end date to get the number of business days
+              between the two dates.
+            </p>
+
+            <ul>
+              <div class="cardform-parent">
+                <li>
+                  <span> Start Date:</span>
+                  <input type="date" onChange="change_result()" name="d1" id="d1" />
+                </li>
+                <li>
+                  <span> End Date:</span>
+                  <input type="date" onChange="change_result()" name="d2" id="d2" />
+                </li>
+              </div>
+              <li class="workingdays"><span id="result"></span></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container h-100 form-wrapper">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="card-form">
+          <form>
+            <p>
+              Enter a start date and a number of business days to count forward.
+            </p>
+            <ul>
+              <div class="cardform-parent">
+                <li>
+                  <span> Start Date:</span>
+                  <input type="date" onChange="AddBusinessDays()" name="d3" />
+                </li>
+                <li>
+                  <span>Days to Add:</span>
+                  <input
+                    class="dayaddsub"
+                    type="number"
+                    min="0"
+                    onChange="AddBusinessDays()"
+                    name="d4"
+                  />
+                </li>
+              </div>
+              <li class="workingdays"><span id="result2"></span></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container h-100 form-wrapper">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="card-form">
+          <form>
+            <p>
+              Enter an end date and a number of business days to count
+              backwards.
+            </p>
+            <ul>
+              <div class="cardform-parent">
+                <li>
+                  <span> End Date:</span>
+                  <input type="date" onChange="SubBusinessDays()" name="d4" />
+                </li>
+                <li>
+                  <span> Days to Subtract:</span>
+
+                  <input
+                    class="dayaddsub"
+                    type="number"
+                    min="0"
+                    onChange="SubBusinessDays()"
+                    name="d5"
+                  />
+                </li>
+              </div>
+              <li class="workingdays"><span id="result3"></span></li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
 <script>
 var holidays = [];
 function change_result() {
@@ -216,13 +291,43 @@ function SubBusinessDays() {
 
 }
 </script>
-    <div class="footer">
-        <p class="footertext">Created by Gordon and Cody Bonnar with code by <a href="https://stackoverflow.com/questions/37069186/calculate-working-days-between-two-dates-in-javascript-excepts-holidays">OscarGarcia</a> and licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></p>
-    </div>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p class="footertext">
+            Created by Gordon and Cody Bonnar with code by
+            <a
+              href="https://stackoverflow.com/questions/37069186/calculate-working-days-between-two-dates-in-javascript-excepts-holidays"
+              >OscarGarcia</a
+            >
+            and licensed under
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/"
+              >CC BY-SA 3.0</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
 </body>
 </html>

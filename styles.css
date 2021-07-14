@@ -1,89 +1,211 @@
-h1 {
-    font-family: Arial, Helvetica;
-    color: #304972;
-    margin: 0;
-    padding: 0px;
-    font-size: 51px;
-    line-height: 44px;
-    letter-spacing: -2px;
-    font-weight: bold;
-    text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-h2 {
-    margin-bottom: 6px;
-    font-family: Arial, Helvetica;
-    color: #304972;
-    text-align: center;
+html {
+  font-size: 62.5%;
 }
 
-p {
-    text-align: center;
-    display: block;
-    font-size: 25px;
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  overflow-x: hidden;
+  color: #152733;
 }
 
 ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  list-style: none;
 }
 
-ul li {
-    display: block;
-    margin-bottom: 10px;
-    min-height: 35px;
-}
-
-ul li.workingdays {
-    text-align: center;
-    margin: 20px;
-    font-size: 50px;
-}
-
-.form-style {
-    max-width: 800px;
-    background: #FAFAFA;
-    padding: 30px;
-    margin: 25px auto;
-    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
-    border-radius: 10px;
-    border: 6px solid #305A72;
-    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
-    font-size: 22pt;
-    display: flex;
-    justify-content: space-around;
-}
-
-input[type="date"] {
-    -webkit-align-items: center;
-    display: -webkit-inline-flex;
-    overflow: hidden;
-    padding: 0;
-    -webkit-padding-start: 1px;
-    font-size: 24px;
-    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
-}
-
-input[type="text"] {
-    -webkit-align-items: center;
-    display: -webkit-inline-flex;
-    overflow: hidden;
-    padding: 0;
-    -webkit-padding-start: 1px;
-    font-size: 24px;
-    font-family: Baskerville, "Baskerville Old Face", "Goudy Old Style", Garamond, "Times New Roman", serif;
-    width: 40px;
-}
-.footer {
-  position: relative;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #305A72;
-  color: white;
-  text-align: center;
-}
 a {
-  color: white;
+  text-decoration: none;
+}
+
+/* Heading-Area */
+.heading-area {
+  background-color: #271f30;
+  color: #fff;
+  margin-bottom: 3.5rem;
+}
+
+.heading-area .header-content {
+  padding: 2rem 0rem;
+}
+
+.heading-area .header-content h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  line-height: 1.25;
+  padding-bottom: 0.5rem;
+}
+
+.heading-area .header-content h5 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* Form-Card */
+.card-form {
+  width: 750px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  color: #271f30;
+  border: 8px solid #271f30;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.card-form form p {
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+}
+
+.card-form ul {
+  text-align: left;
+}
+
+.card-form .cardform-parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-form .cardform-parent li {
+  width: 280px;
+}
+
+.card-form ul li span {
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+
+.card-form ul li input {
+  display: inline-block;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  color: #271f30;
+  border: 2px solid #fff;
+  outline: none;
+  width: 100%;
+  border: 2px solid #271f30;
+}
+
+.card-form ul li input::placeholder {
+  color: #8d8d8d;
+}
+
+.card-form ul .workingdays {
+  text-align: center;
+  padding-top: 3.5rem;
+}
+
+.card-form ul .workingdays span {
+  display: inline-block;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  font-family: inherit;
+}
+
+/* Footer */
+.footer {
+  background-color: #271f30;
+  color: #fff;
+}
+
+.footer .footer-content {
+  padding: 2rem 0rem;
+}
+
+.footer .footertext {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0rem;
+}
+
+.footer .footertext a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .card-form .cardform-parent li {
+    width: 240px;
+  }
+
+  .heading-area .header-content h1 {
+    font-size: 3.2rem;
+  }
+
+  .heading-area .header-content h5 {
+    font-size: 2rem;
+  }
+
+  .footer .footertext {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .card-form {
+    width: 500px;
+    padding: 1.5rem;
+  }
+
+  .card-form .cardform-parent li {
+    width: 220px;
+  }
+}
+
+@media (max-width: 500px) {
+  .card-form {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .form-wrapper {
+    padding: 0rem 2rem;
+  }
+
+  .card-form .cardform-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .card-form .cardform-parent li {
+    width: 100%;
+  }
+
+  .heading-area .header-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .heading-area .header-content h5 {
+    font-size: 1.6rem;
+  }
+
+  .card-form form p {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0rem;
+    line-height: 1.2;
+  }
 }
