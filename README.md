@@ -2,9 +2,10 @@
 
 ## What does it do?
 
-Whenever you need to calculate some time in the future or the past or between two dates counting only business days, look no further.
+Whenever you need to calculate some time in the future or the past or between two dates counting only business days, instead of
+counting manually on a calendar, you can use datecalc to help.
 
-The Business Days Calculator counts a business day as a week day (excluding weekends) and also excluding federal government holidays.
+The Business Days Calculator counts a business day as a week day (Monday through Friday) excluding federal government holidays.
 
 ## How does it work?
 
