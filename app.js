@@ -25,23 +25,32 @@ function change_result() {
   xmlhttp.send();
 }
 }
-  
 
 $(document).ready(() => {
   $('#calc').click(() => {
     var d1 = $('#d1').val();
     var d2 = $('#d2').val();
-    console.log(d1);
     $('#dif').text(workingDaysBetweenDates(d1, d2));
   });
-});
 
+
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        $(this).trigger('change');
+        return false;
+      }
+    });
+  });
+
+});
 
 
 let workingDaysBetweenDates = (d0, d1) => {
   /* Two working days and an sunday (not working day) */
   //var holidays = ['2016-05-03', '2016-05-05', '2016-05-07'];
-    var startDate = parseDate(d0);
+  var startDate = parseDate(d0);
   startDate.setDate(startDate.getDate() + 1);
   var endDate = parseDate(d1);
 
@@ -65,7 +74,7 @@ let workingDaysBetweenDates = (d0, d1) => {
   var startDay = startDate.getDay();
   var endDay = endDate.getDay();
 
-  // Remove weekend not previously remove
+  // Remove weekend not previously removed
   if (startDay - endDay > 1) {
     days -= 2;
   }
@@ -96,7 +105,7 @@ function parseDate(input) {
   // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
   return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
   }
-  
+
 }
 function getFormattedDate(date) {
   let year = date.getFullYear();
@@ -146,7 +155,7 @@ function AddBusinessDays() {
   xmlhttp.open('GET', 'holidayslist.txt', true);
   xmlhttp.send();
   }
-  
+
 }
 
 function SubBusinessDays() {
@@ -192,5 +201,5 @@ function SubBusinessDays() {
   xmlhttp.open('GET', 'holidayslist.txt', true);
   xmlhttp.send();
   }
-  
+
 }
