@@ -1,4 +1,5 @@
 var holidays = [];
+
 function change_result() {
   var startDate = document.getElementsByTagName("input")[0].value;
   var endDate = document.getElementsByTagName("input")[1].value;
@@ -103,6 +104,7 @@ function parseDate(input) {
     return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
   }
 }
+
 function getFormattedDate(date) {
   let year = date.getFullYear();
   let month = (1 + date.getMonth()).toString().padStart(2, "0");
