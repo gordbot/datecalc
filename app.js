@@ -116,6 +116,7 @@ var options = {
   month: "long",
   day: "numeric",
 };
+
 function AddBusinessDays() {
   var StartDate = document.getElementsByTagName("input")[2].value;
   var EndDate = StartDate;
