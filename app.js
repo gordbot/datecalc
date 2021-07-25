@@ -22,7 +22,7 @@ function change_result() {
           workingDaysBetweenDates(startDate, endDate) + " working days";
       }
     };
-    xmlhttp.open("GET", "holidayslist.txt", true);
+    xmlhttp.open("GET", "holidays.txt", true);
     xmlhttp.send();
   }
 }
@@ -151,7 +151,7 @@ function AddBusinessDays() {
           EndDateDate.toLocaleDateString("en-US", options);
       }
     };
-    xmlhttp.open("GET", "holidayslist.txt", true);
+    xmlhttp.open("GET", "holidays.txt", true);
     xmlhttp.send();
   }
 }
@@ -196,7 +196,7 @@ function SubBusinessDays() {
           StartDateDate.toLocaleDateString("en-US", options);
       }
     };
-    xmlhttp.open("GET", "holidayslist.txt", true);
+    xmlhttp.open("GET", "holidays.txt", true);
     xmlhttp.send();
   }
 }
