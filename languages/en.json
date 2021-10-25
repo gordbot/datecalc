@@ -1,0 +1,13 @@
+{ 
+    "title": "Business Day Calculator",
+    "subtitle": "Tools to calculate dates based on the number of working days.",
+    "start_date": "Start Date:",
+    "end_date": "End Date:",
+    "days_to_add": "Days to Add:",
+    "days_to_subtract": "Days to Subtract:",
+    "instructions_box1": "Enter a start date and end date to get the number of business days between the two dates.",
+    "instructions_box2": "Enter a start date and a number of business days to count forward.",
+    "instructions_box3": " Enter an end date and a number of business days to count backwards.",
+    "footer": "Created by Gordon and Cody Bonnar with code by OscarGarcia and licensed under CC BY-SA 3.0"
+}
+

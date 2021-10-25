@@ -1,0 +1,12 @@
+{ 
+    "title": "Calculateur de jours ouvrables",
+    "subtitle": "Outils permettant de calculer les dates en fonction du nombre de jours ouvrables.",
+    "start_date": "Date de début:",
+    "end_date": "Date de fin:",
+    "days_to_add": "Jours à ajouter:",
+    "days_to_subtract": "Jours à soustraire:",
+    "instructions_box1": "Indiquez une date de début et une date de fin pour obtenir le nombre de jours ouvrables entre ces deux dates.",
+    "instructions_box2": "Indiquez une date de début et un nombre de jours ouvrables à décompter.",
+    "instructions_box3": "Indiquez une date de fin et un nombre de jours ouvrables à décompter.",
+    "footer": "Créé par Gordon et Cody Bonnar avec le code d'OscarGarcia et sous licence CC BY-SA 3.0"
+}
