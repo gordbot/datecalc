@@ -15,6 +15,9 @@ In the second box you can enter a start date and a number of business days to co
 
 In the third box, you can enter an end date and a number of business days backward and it will return the start date.
 
+## Try it out
+[Access the Business Day Calculator](https://gordbot.github.io/datecalc/)
+
 ## License
 
 This work is licensed under a [Creative Commons Attribution 4.0 International
