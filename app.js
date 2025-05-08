@@ -241,7 +241,14 @@ function SubBusinessDays() {
         continue;
       }
 
-      DaysSubbed = workingDaysBetweenDates(getFormattedDate(StartDateDate), EndDate, holidays);
+      // Skip holidays
+      const formattedDate = getFormattedDate(StartDateDate);
+      const isHoliday = holidays.some((holiday) => holiday.date === formattedDate);
+      if (isHoliday) {
+        continue;
+      }
+
+      DaysSubbed++;
     }
 
     document.getElementById("result3").innerHTML =
