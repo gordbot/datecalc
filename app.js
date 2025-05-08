@@ -1,4 +1,4 @@
-`function getCanadianFederalHolidays(startDate, endDate) {
+function getCanadianFederalHolidays(startDate, endDate) {
   const holidays = [];
 
   // Convert inputs to Date objects
