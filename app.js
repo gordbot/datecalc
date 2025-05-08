@@ -1,37 +1,114 @@
-var holidays = [];
+function getCanadianFederalHolidays(startDate, endDate) {
+  const holidays = [];
+
+  // Convert inputs to Date objects
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Helper function to check if date is in range
+  const isInRange = (date) => date >= start && date <= end;
+
+  // Easter calculation using the "Anonymous Gregorian algorithm"
+  function calculateEaster(year) {
+      const f = Math.floor,
+          G = year % 19,
+          C = f(year / 100),
+          H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30,
+          I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11)),
+          J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7,
+          L = I - J,
+          month = 3 + f((L + 40) / 44),
+          day = L + 28 - 31 * f(month / 4);
+
+      return new Date(year, month - 1, day); // month is 0-based
+  }
+
+  // Calculate holidays for each year in range
+  for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
+      const easter = calculateEaster(year);
+      const goodFriday = new Date(easter);
+      goodFriday.setDate(easter.getDate() - 2);
+
+      const easterMonday = new Date(easter);
+      easterMonday.setDate(easter.getDate() + 1);
+
+      const memorialDay = new Date(year, 6, 1); // July 1st
+      memorialDay.setDate(1 + (1 - memorialDay.getDay() + 7) % 7); // First Monday in July (Newfoundland & Labrador)
+
+      const canadaDay = new Date(year, 6, 1); // July 1
+      const civicHoliday = new Date(year, 7, 1); // August 1
+      civicHoliday.setDate(1 + (1 - civicHoliday.getDay() + 7) % 7); // First Monday in August
+
+      const labourDay = new Date(year, 8, 1); // September 1
+      labourDay.setDate(1 + (1 - labourDay.getDay() + 7) % 7); // First Monday in September
+
+      const truthAndReconciliation = new Date(year, 8, 30); // September 30
+
+      const thanksgiving = new Date(year, 9, 1); // October 1
+      thanksgiving.setDate(1 + ((1 - thanksgiving.getDay() + 7) % 7) + 7); // Second Monday in October
+
+      const remembranceDay = new Date(year, 10, 11); // November 11
+      const christmas = new Date(year, 11, 25); // December 25
+      const boxingDay = new Date(year, 11, 26); // December 26
+      const newYears = new Date(year, 0, 1); // January 1
+
+      const yearHolidays = [
+          { name: "New Year's Day", date: newYears },
+          { name: "Good Friday", date: goodFriday },
+          { name: "Easter Monday", date: easterMonday },
+          { name: "Memorial Day", date: memorialDay },
+          { name: "Canada Day", date: canadaDay },
+          { name: "Civic Holiday", date: civicHoliday },
+          { name: "Labour Day", date: labourDay },
+          { name: "National Truth and Reconciliation Day", date: truthAndReconciliation },
+          { name: "Thanksgiving", date: thanksgiving },
+          { name: "Remembrance Day", date: remembranceDay },
+          { name: "Christmas Day", date: christmas },
+          { name: "Boxing Day", date: boxingDay }
+      ];
+
+      yearHolidays.forEach(holiday => {
+          if (isInRange(holiday.date)) {
+              holidays.push({
+                  name: holiday.name,
+                  date: holiday.date.toISOString().split('T')[0]
+              });
+          }
+      });
+  }
+
+  return holidays;
+}
 
 function change_result() {
-  var startDate = document.getElementsByTagName("input")[0].value;
-  var endDate = document.getElementsByTagName("input")[1].value;
-  var xmlhttp;
-  if (startDate !== "" && endDate !== "") {
-    if (window.XMLHttpRequest) {
-      // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {
-      // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var text = xmlhttp.responseText;
-        // Now convert it into array using regex
+  const startDate = document.getElementsByTagName("input")[0].value;
+  const endDate = document.getElementsByTagName("input")[1].value;
 
-        holidays = text.split("\n");
-        document.getElementById("result").innerHTML =
-          workingDaysBetweenDates(startDate, endDate) + " working days";
-      }
-    };
-    xmlhttp.open("GET", "holidays.txt", true);
-    xmlhttp.send();
+  if (startDate !== "" && endDate !== "") {
+    // Calculate working days using global holidays
+    const workingDays = workingDaysBetweenDates(startDate, endDate, holidays);
+
+    // Update the result in the DOM
+    document.getElementById("result").innerHTML = workingDays + " working days";
+  } else {
+    document.getElementById("result").innerHTML = "Please enter valid dates.";
   }
 }
+
+let holidays = [];
+
+// Initialize holidays on page load
+$(document).ready(() => {
+  const startDate = "2000-01-01"; // Arbitrary early date
+  const endDate = "2100-12-31"; // Arbitrary far future date
+  holidays = getCanadianFederalHolidays(startDate, endDate);
+});
 
 $(document).ready(() => {
   $("#calc").click(() => {
     var d1 = $("#d1").val();
     var d2 = $("#d2").val();
-    $("#dif").text(workingDaysBetweenDates(d1, d2));
+    $("#dif").text(workingDaysBetweenDates(d1, d2), holidays);
   });
 
   $(document).ready(function () {
@@ -45,12 +122,15 @@ $(document).ready(() => {
   });
 });
 
-let workingDaysBetweenDates = (d0, d1) => {
-  /* Two working days and an sunday (not working day) */
-  //var holidays = ['2016-05-03', '2016-05-05', '2016-05-07'];
-  var startDate = parseDate(d0);
-  startDate.setDate(startDate.getDate() + 1);
-  var endDate = parseDate(d1);
+$(document).ready(() => {
+  $("#calc").click(() => {
+    change_result();
+  });
+});
+
+let workingDaysBetweenDates = (d0, d1, holidays) => {
+  const startDate = parseDate(d0);
+  const endDate = parseDate(d1);
 
   // Validate input
   if (endDate < startDate) {
@@ -58,41 +138,43 @@ let workingDaysBetweenDates = (d0, d1) => {
   }
 
   // Calculate days between dates
-  var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
+  const millisecondsPerDay = 86400 * 1000; // Day in milliseconds
   startDate.setHours(0, 0, 0, 1); // Start just after midnight
   endDate.setHours(23, 59, 59, 999); // End just before midnight
-  var diff = endDate - startDate; // Milliseconds between datetime objects
-  var days = Math.ceil(diff / millisecondsPerDay);
+  let diff = endDate - startDate; // Milliseconds between datetime objects
+  let days = Math.ceil(diff / millisecondsPerDay);
 
   // Subtract two weekend days for every week in between
-  var weeks = Math.floor(days / 7);
+  const weeks = Math.floor(days / 7);
   days -= weeks * 2;
 
   // Handle special cases
-  var startDay = startDate.getDay();
-  var endDay = endDate.getDay();
+  const startDay = startDate.getDay();
+  const endDay = endDate.getDay();
 
   // Remove weekend not previously removed
   if (startDay - endDay > 1) {
     days -= 2;
   }
   // Remove start day if span starts on Sunday but ends before Saturday
-  if (startDay == 0 && endDay != 6) {
+  if (startDay === 0 && endDay !== 6) {
     days--;
   }
   // Remove end day if span ends on Saturday but starts after Sunday
-  if (endDay == 6 && startDay != 0) {
+  if (endDay === 6 && startDay !== 0) {
     days--;
   }
-  /* Here is the code */
-  holidays.forEach((day) => {
-    if (day >= d0 && day <= d1) {
-      /* If it is not saturday (6) or sunday (0), substract it */
-      if (parseDate(day).getDay() % 6 != 0) {
+
+  // Subtract holidays that are not weekends
+  holidays.forEach((holiday) => {
+    const holidayDate = parseDate(holiday.date);
+    if (holidayDate >= startDate && holidayDate <= endDate) {
+      if (holidayDate.getDay() % 6 !== 0) {
         days--;
       }
     }
   });
+
   return days;
 };
 
@@ -120,83 +202,49 @@ var options = {
 };
 
 function AddBusinessDays() {
-  var StartDate = document.getElementsByTagName("input")[2].value;
-  var EndDate = StartDate;
-  var DaysToAdd = document.getElementsByTagName("input")[3].value;
-  var DaysAdded = 0;
-  var EndDateDate = parseDate(EndDate);
+  const StartDate = document.getElementsByTagName("input")[2].value;
+  let EndDate = StartDate;
+  const DaysToAdd = parseInt(document.getElementsByTagName("input")[3].value, 10);
+  let DaysAdded = 0;
 
-  if (EndDate !== "" && DaysToAdd !== "") {
-    if (window.XMLHttpRequest) {
-      // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {
-      // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  if (StartDate !== "" && DaysToAdd > 0) {
+    const EndDateDate = parseDate(EndDate);
+
+    while (DaysAdded < DaysToAdd) {
+      EndDateDate.setDate(EndDateDate.getDate() + 1);
+      DaysAdded = workingDaysBetweenDates(StartDate, getFormattedDate(EndDateDate), holidays);
     }
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var text = xmlhttp.responseText;
-        // Now convert it into array using regex
 
-        holidays = text.split("\n");
-        while (DaysAdded != DaysToAdd) {
-          EndDateDate.setDate(EndDateDate.getDate() + 1);
-          DaysAdded = workingDaysBetweenDates(
-            StartDate,
-            getFormattedDate(EndDateDate)
-          );
-        }
-        document.getElementById("result2").innerHTML =
-          EndDateDate.toLocaleDateString("en-US", options);
-      }
-    };
-    xmlhttp.open("GET", "holidays.txt", true);
-    xmlhttp.send();
+    document.getElementById("result2").innerHTML =
+      EndDateDate.toLocaleDateString("en-US", options);
+  } else {
+    document.getElementById("result2").innerHTML = "Please enter valid input.";
   }
 }
 
 function SubBusinessDays() {
-  var EndDate = document.getElementsByTagName("input")[4].value;
-  var StartDate = EndDate;
-  var DaysToSub = document.getElementsByTagName("input")[5].value;
-  var DaysSubbed = 0;
-  var StartDateDate = parseDate(StartDate);
-  var xmlhttp;
-  if (StartDate !== "" && DaysToSub !== "") {
-    if (window.XMLHttpRequest) {
-      // code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-    } else {
-      // code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var text = xmlhttp.responseText;
-        // Now convert it into array using regex
+  const EndDate = document.getElementsByTagName("input")[4].value;
+  let StartDate = EndDate;
+  const DaysToSub = parseInt(document.getElementsByTagName("input")[5].value, 10);
+  let DaysSubbed = 0;
 
-        holidays = text.split("\n");
-        while (DaysSubbed != DaysToSub) {
-          // Handle special cases
-          var startDay = StartDateDate.getDay();
-          // Remove weekend not previously removed.
-          if (startDay == 1) {
-            StartDateDate.setDate(StartDateDate.getDate() - 3);
-          } else {
-            StartDateDate.setDate(StartDateDate.getDate() - 1);
-          }
-          DaysSubbed = workingDaysBetweenDates(
-            getFormattedDate(StartDateDate),
-            EndDate
-          );
-        }
+  if (EndDate !== "" && DaysToSub > 0) {
+    const StartDateDate = parseDate(StartDate);
 
-        document.getElementById("result3").innerHTML =
-          StartDateDate.toLocaleDateString("en-US", options);
+    while (DaysSubbed < DaysToSub) {
+      StartDateDate.setDate(StartDateDate.getDate() - 1);
+
+      // Skip weekends
+      if (StartDateDate.getDay() === 0 || StartDateDate.getDay() === 6) {
+        continue;
       }
-    };
-    xmlhttp.open("GET", "holidays.txt", true);
-    xmlhttp.send();
+
+      DaysSubbed = workingDaysBetweenDates(getFormattedDate(StartDateDate), EndDate, holidays);
+    }
+
+    document.getElementById("result3").innerHTML =
+      StartDateDate.toLocaleDateString("en-US", options);
+  } else {
+    document.getElementById("result3").innerHTML = "Please enter valid input.";
   }
 }
