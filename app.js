@@ -99,9 +99,10 @@ let holidays = [];
 
 // Initialize holidays on page load
 $(document).ready(() => {
-  const startDate = "2000-01-01"; // Arbitrary early date
-  const endDate = "2100-12-31"; // Arbitrary far future date
+  const startDate = "2020-01-01"; // Arbitrary early date
+  const endDate = "2030-12-31"; // Arbitrary far future date
   holidays = getCanadianFederalHolidays(startDate, endDate);
+  
 });
 
 $(document).ready(() => {
@@ -168,8 +169,9 @@ let workingDaysBetweenDates = (d0, d1, holidays) => {
   // Subtract holidays that are not weekends
   holidays.forEach((holiday) => {
     const holidayDate = parseDate(holiday.date);
+
     if (holidayDate >= startDate && holidayDate <= endDate) {
-      if (holidayDate.getDay() % 6 !== 0) {
+      if (holidayDate.getDay() % 6 !== 0) { // Exclude weekends
         days--;
       }
     }
