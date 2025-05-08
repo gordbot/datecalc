@@ -10,71 +10,72 @@ function getCanadianFederalHolidays(startDate, endDate) {
 
   // Easter calculation using the "Anonymous Gregorian algorithm"
   function calculateEaster(year) {
-      const f = Math.floor,
-          G = year % 19,
-          C = f(year / 100),
-          H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30,
-          I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11)),
-          J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7,
-          L = I - J,
-          month = 3 + f((L + 40) / 44),
-          day = L + 28 - 31 * f(month / 4);
+    const f = Math.floor,
+      G = year % 19,
+      C = f(year / 100),
+      H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30,
+      I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11)),
+      J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7,
+      L = I - J,
+      month = 3 + f((L + 40) / 44),
+      day = L + 28 - 31 * f(month / 4);
 
-      return new Date(year, month - 1, day); // month is 0-based
+    return new Date(year, month - 1, day); // month is 0-based
   }
 
   // Calculate holidays for each year in range
   for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
-      const easter = calculateEaster(year);
-      const goodFriday = new Date(easter);
-      goodFriday.setDate(easter.getDate() - 2);
+    const easter = calculateEaster(year);
+    const goodFriday = new Date(easter);
+    goodFriday.setDate(easter.getDate() - 2);
 
-      const easterMonday = new Date(easter);
-      easterMonday.setDate(easter.getDate() + 1);
+    const easterMonday = new Date(easter);
+    easterMonday.setDate(easter.getDate() + 1);
 
-      const memorialDay = new Date(year, 6, 1); // July 1st
-      memorialDay.setDate(1 + (1 - memorialDay.getDay() + 7) % 7); // First Monday in July (Newfoundland & Labrador)
+    // Calculate Victoria Day (Monday before May 25th)
+    const victoriaDay = new Date(year, 4, 24); // Start with May 24th
+    victoriaDay.setDate(victoriaDay.getDate() - victoriaDay.getDay()); // Move back to the previous Monday
 
-      const canadaDay = new Date(year, 6, 1); // July 1
-      const civicHoliday = new Date(year, 7, 1); // August 1
-      civicHoliday.setDate(1 + (1 - civicHoliday.getDay() + 7) % 7); // First Monday in August
+    const canadaDay = new Date(year, 6, 1); // July 1
+    const civicHoliday = new Date(year, 7, 1); // August 1
+    civicHoliday.setDate(1 + (1 - civicHoliday.getDay() + 7) % 7); // First Monday in August
 
-      const labourDay = new Date(year, 8, 1); // September 1
-      labourDay.setDate(1 + (1 - labourDay.getDay() + 7) % 7); // First Monday in September
+    const labourDay = new Date(year, 8, 1); // September 1
+    labourDay.setDate(1 + (1 - labourDay.getDay() + 7) % 7); // First Monday in September
 
-      const truthAndReconciliation = new Date(year, 8, 30); // September 30
+    const truthAndReconciliation = new Date(year, 8, 30); // September 30
 
-      const thanksgiving = new Date(year, 9, 1); // October 1
-      thanksgiving.setDate(1 + ((1 - thanksgiving.getDay() + 7) % 7) + 7); // Second Monday in October
+    const thanksgiving = new Date(year, 9, 1); // October 1
+    thanksgiving.setDate(1 + ((1 - thanksgiving.getDay() + 7) % 7) + 7); // Second Monday in October
 
-      const remembranceDay = new Date(year, 10, 11); // November 11
-      const christmas = new Date(year, 11, 25); // December 25
-      const boxingDay = new Date(year, 11, 26); // December 26
-      const newYears = new Date(year, 0, 1); // January 1
+    const remembranceDay = new Date(year, 10, 11); // November 11
+    const christmas = new Date(year, 11, 25); // December 25
+    const boxingDay = new Date(year, 11, 26); // December 26
+    const newYears = new Date(year, 0, 1); // January 1
 
-      const yearHolidays = [
-          { name: "New Year's Day", date: newYears },
-          { name: "Good Friday", date: goodFriday },
-          { name: "Easter Monday", date: easterMonday },
-          { name: "Memorial Day", date: memorialDay },
-          { name: "Canada Day", date: canadaDay },
-          { name: "Civic Holiday", date: civicHoliday },
-          { name: "Labour Day", date: labourDay },
-          { name: "National Truth and Reconciliation Day", date: truthAndReconciliation },
-          { name: "Thanksgiving", date: thanksgiving },
-          { name: "Remembrance Day", date: remembranceDay },
-          { name: "Christmas Day", date: christmas },
-          { name: "Boxing Day", date: boxingDay }
-      ];
+    const yearHolidays = [
+      { name: "New Year's Day", date: newYears },
+      { name: "Good Friday", date: goodFriday },
+      { name: "Easter Monday", date: easterMonday },
+      { name: "Victoria Day", date: victoriaDay },
+      { name: "Canada Day", date: canadaDay },
+      { name: "Civic Holiday", date: civicHoliday },
+      { name: "Labour Day", date: labourDay },
+      { name: "National Truth and Reconciliation Day", date: truthAndReconciliation },
+      { name: "Thanksgiving", date: thanksgiving },
+      { name: "Remembrance Day", date: remembranceDay },
+      { name: "Christmas Day", date: christmas },
+      { name: "Boxing Day", date: boxingDay }
+    ];
 
-      yearHolidays.forEach(holiday => {
-          if (isInRange(holiday.date)) {
-              holidays.push({
-                  name: holiday.name,
-                  date: holiday.date.toISOString().split('T')[0]
-              });
-          }
-      });
+    yearHolidays.forEach((holiday) => {
+      if (isInRange(holiday.date)) {
+        holidays.push({
+          name: holiday.name,
+          date: holiday.date.toISOString().split("T")[0]
+        });
+      }
+    });
   }
 
   return holidays;
